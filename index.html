@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Briefing do projeto</title>
+  <meta name="description" content="Conte sobre o seu negócio para montarmos o seu site.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="briefing.css?v=1">
+</head>
+<body>
+  <header class="topo">
+    <div class="miolo">
+      <p class="selo">Briefing do projeto</p>
+      <h1>Vamos montar o site do seu negócio</h1>
+      <p class="intro">Responda com calma, sem se preocupar em acertar. Leva uns 10 minutos e me mostra o melhor caminho para o seu projeto. O que não souber, pule.</p>
+      <p class="privacidade">As respostas ficam só no seu aparelho até você tocar em enviar.</p>
+    </div>
+  </header>
+
+  <main class="miolo">
+    <div class="progresso" role="progressbar" aria-label="Quanto você já preencheu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+    <form id="formulario" novalidate></form>
+
+    <section id="final" class="final" hidden aria-live="polite">
+      <h2>Quase lá!</h2>
+      <p id="final-texto">Confira o resumo abaixo e envie para mim.</p>
+      <pre id="resumo" tabindex="0"></pre>
+      <div class="acoes">
+        <a id="enviar" class="botao principal" target="_blank" rel="noopener" hidden>Enviar pelo WhatsApp</a>
+        <button type="button" id="copiar" class="botao">Copiar respostas</button>
+        <button type="button" id="baixar" class="botao">Baixar em texto</button>
+        <button type="button" id="voltar" class="botao fraco">Voltar e editar</button>
+      </div>
+      <p id="aviso" class="aviso" role="status"></p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo"><p>Eduardo Jr. Coelho · Sites sob medida</p></div>
+  </footer>
+
+  <script src="briefing.js?v=2"></script>
+  <script src="pagina.js?v=2"></script>
+</body>
+</html>
