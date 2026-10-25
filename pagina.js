@@ -62,8 +62,13 @@
 
   B.SECOES.forEach(function (s, i) {
     const bloco = el('section', { class: 'secao', 'aria-labelledby': 'tit-' + s.id }, [
-      el('p', { class: 'passo', texto: 'Parte ' + (i + 1) + ' de ' + B.SECOES.length }),
-      el('h2', { id: 'tit-' + s.id, texto: s.titulo })
+      el('div', { class: 'secao-topo' }, [
+        el('span', { class: 'num', 'aria-hidden': 'true', texto: String(i + 1) }),
+        el('h2', { id: 'tit-' + s.id }, [
+          el('span', { class: 'so-leitor', texto: 'Parte ' + (i + 1) + ' de ' + B.SECOES.length + ': ' }),
+          document.createTextNode(s.titulo)
+        ])
+      ])
     ]);
     if (s.ajuda) bloco.appendChild(el('p', { class: 'sub', texto: s.ajuda }));
     s.campos.forEach(function (c) { bloco.appendChild(campo(c)); });
@@ -158,6 +163,10 @@
     const enviar = document.getElementById('enviar');
     enviar.hidden = !link;
     if (link) enviar.href = link;
+    const email = B.linkEmail(B.CONFIG.email, B.CONFIG.titulo + ': ' + (B.limpo(r.negocio) || 'novo projeto'), texto);
+    const enviarEmail = document.getElementById('enviar-email');
+    enviarEmail.hidden = !email;
+    if (email) enviarEmail.href = email;
     document.getElementById('final-texto').textContent = link
       ? 'Confira o resumo abaixo e toque em enviar pelo WhatsApp.'
       : 'Confira o resumo abaixo, copie e me mande por mensagem.';

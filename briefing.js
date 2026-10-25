@@ -14,7 +14,8 @@
 
   // Para onde o cliente envia as respostas (só números, com 55 e DDD). Vazio = só copiar/baixar.
   const CONFIG = {
-    whatsapp: '',
+    whatsapp: '5542999042826',
+    email: 'eduardocoelhopro@gmail.com',
     titulo: 'Briefing do projeto',
     responsavel: 'Eduardo Jr. Coelho'
   };
@@ -191,8 +192,13 @@
     return 'https://wa.me/' + n + '?text=' + encodeURIComponent(texto);
   }
 
+  function linkEmail(email, assunto, texto) {
+    if (!email) return '';
+    return 'mailto:' + email + '?subject=' + encodeURIComponent(assunto) + '&body=' + encodeURIComponent(texto);
+  }
+
   const Briefing = {
-    CONFIG: CONFIG, SECOES: SECOES, montarResumo: montarResumo, faltando: faltando, linkWhatsApp: linkWhatsApp,
+    CONFIG: CONFIG, SECOES: SECOES, montarResumo: montarResumo, faltando: faltando, linkWhatsApp: linkWhatsApp, linkEmail: linkEmail,
     limpo: limpo, grupoDe: grupoDe, camposDoGrupo: camposDoGrupo, opcoesDoGrupo: opcoesDoGrupo, vale: vale
   };
 
