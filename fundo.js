@@ -13,8 +13,9 @@
 
   const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/+';
   const CL = 11, CA = 18;            // tamanho da célula
-  const BASE = 0.13;                 // brilho das letras apagadas
-  const INTERVALO = 1000 / 30;       // 30 quadros por segundo
+  // No celular (tela estreita) o fundo é mais suave e mais lento: menos ruído atrás do texto e menos bateria
+  const celular = window.matchMedia('(max-width: 559px)');
+  let BASE = 0.13, FORCA = 1, MAXIMO = 1, INTERVALO = 1000 / 30;
   const parado = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   let cols = 0, linhas = 0, total = 0, larg = 0, alt = 0;
@@ -33,6 +34,10 @@
   function sortear() { return LETRAS[(Math.random() * LETRAS.length) | 0]; }
 
   function medir() {
+    BASE = celular.matches ? 0.09 : 0.13;
+    FORCA = celular.matches ? 0.6 : 1;
+    MAXIMO = celular.matches ? 0.42 : 1;
+    INTERVALO = 1000 / (celular.matches ? 24 : 30);
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     larg = window.innerWidth; alt = window.innerHeight;
     canvas.width = Math.round(larg * dpr); canvas.height = Math.round(alt * dpr);
@@ -51,7 +56,7 @@
   function celula(i) {
     const x = (i % cols) * CL, y = ((i / cols) | 0) * CA;
     ctx.fillStyle = '#000'; ctx.fillRect(x, y, CL, CA);
-    ctx.fillStyle = 'rgba(255,255,255,' + Math.min(1, BASE + brilho[i] * 0.87).toFixed(3) + ')';
+    ctx.fillStyle = 'rgba(255,255,255,' + Math.min(MAXIMO, BASE + brilho[i] * 0.87).toFixed(3) + ')';
     ctx.fillText(grade[i], x, y);
   }
 
@@ -88,7 +93,7 @@
       if (z.fx < 0 || z.fx > 1) z.vx = -z.vx;
       if (z.fy < 0 || z.fy > 1) z.vy = -z.vy;
       const pulso = 0.85 + 0.15 * Math.sin(tempo * 1.3 + n * 2);
-      iluminar(z.fx * larg, z.fy * alt, z.raio * pulso, z.forca);
+      iluminar(z.fx * larg, z.fy * alt, z.raio * pulso * (celular.matches ? 0.75 : 1), z.forca * FORCA);
     });
     if (cursor.ativo) iluminar(cursor.x, cursor.y, 170, 1);
 
@@ -98,7 +103,7 @@
       const y = (ciclo / 2.5) * (alt + 6 * CA) - 3 * CA;
       const l0 = Math.max(0, ((y - 3 * CA) / CA) | 0), l1 = Math.min(linhas - 1, ((y + 3 * CA) / CA) | 0);
       for (let l = l0; l <= l1; l++) {
-        const v = 0.55 * (1 - Math.abs(l * CA + CA / 2 - y) / (3 * CA));
+        const v = 0.55 * FORCA * (1 - Math.abs(l * CA + CA / 2 - y) / (3 * CA));
         if (v <= 0) continue;
         for (let c = 0; c < cols; c++) { const i = l * cols + c; if (v > alvo[i]) alvo[i] = v; candidato(i); }
       }
@@ -109,7 +114,7 @@
     for (let k = 0; k < soltas; k++) {
       const i = (Math.random() * total) | 0;
       grade[i] = sortear();
-      if (alvo[i] < 0.3 && Math.random() < 0.5) brilho[i] = Math.max(brilho[i], 0.5);
+      if (alvo[i] < 0.3 && Math.random() < 0.5) brilho[i] = Math.max(brilho[i], 0.5 * FORCA);
       candidato(i);
     }
 

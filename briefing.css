@@ -28,8 +28,13 @@ body {
 .fundo-letras { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .topo, main, .rodape { position: relative; z-index: 1; }
 /* contorno preto: o texto continua legível quando as letras do fundo acendem atrás dele */
-.topo, main, .rodape { text-shadow: 0 0 3px #000, 0 0 8px #000, 0 0 16px #000; }
+.topo, main, .rodape { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 10px #000, 0 0 18px #000, 0 0 28px #000; }
 .opcao:has(input:checked), .botao.principal { text-shadow: none; }
+/* títulos e perguntas: sombra preta mais forte para destacar das letras do fundo */
+h2, .num, .rotulo, legend {
+  text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 10px #000, 0 0 18px #000, 0 0 30px #000, 0 0 46px #000, 0 0 64px #000;
+}
+h1 { text-shadow: 0 0 2px #000, 0 0 6px #000, 0 0 12px #000, 0 0 22px #000, 0 0 36px #000, 0 0 56px #000, 0 0 80px #000; }
 .miolo { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 
 /* Cabeçalho */
@@ -121,6 +126,7 @@ pre {
 .rodape p { margin: 0; }
 
 [hidden] { display: none !important; }
+@media (max-width: 559px) { .sub, .privacidade, small { color: #CFCFCF; } }
 @media (min-width: 560px) {
   .opcoes { grid-template-columns: 1fr 1fr; }
   .acoes { grid-template-columns: repeat(2, 1fr); }
