@@ -37,7 +37,9 @@ body {
 .miolo { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 
 /* Cabeçalho */
-.topo { background: var(--faixa); color: var(--faixa-texto); padding: 40px 0 36px; }
+.topo { position: relative; overflow: hidden; background: var(--faixa); color: var(--faixa-texto); padding: 40px 0 36px; }
+.topo .miolo { position: relative; z-index: 1; }
+.fundo-letras { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 h1 {
   margin: 0 0 16px; max-width: 15ch;
   font: 800 clamp(2.125rem, 8vw, 3.5rem)/1.02 var(--fonte-titulo); letter-spacing: -.02em;
